@@ -44,6 +44,9 @@ end
 # sigbits - ilość bitów mantysy
 function max(floatType, sigbits::Int64)
     # val - największa liczba x taka, że x < 1.0
+    # mnożenie o 2, tj. przesuwanie bitów na prawo spowoduje, że
+    # otrzymamy największą wartość przed kolejną potęgą 2.
+    # To znaczy, że jeśli 2^k = Inf, to val^k = prevfloat(Inf)
     val = floatType(1.0 - 2.0^( -sigbits - 1) )
     pow = 0
     while !isinf( floatType(val * 2) )
