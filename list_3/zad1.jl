@@ -24,9 +24,30 @@ export mbisekcji, mstycznych, msiecznych
 function mbisekcji(f::Function, a::Float64,
                       b::Float64,
                       delta::Float64,
-                      epsilon::Float64)
-
-a + b
+                      epsilon::Float64,
+                      maxit::Int)
+    u = f(a)
+    v = f(b)
+    e = b - a
+    if sign(u) == sign(v)
+        return (0, 0, 0, 1)
+    end
+    for k in range(1, stop=maxit)
+        e = e / 2
+        c = a + e
+        w = f(c)
+        if abs(e) < delta || abs(w) < epsilon
+            return (c, w, k, 0)
+        end
+        if sign(w) != sign(u)
+            b = c
+            v = w
+        else
+            a = c
+            u = w
+        end
+    end
+    return (0, 0, 0, 2)
 end
 
 ##
