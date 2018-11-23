@@ -9,5 +9,4 @@ show(Third.mbisekcji(x -> x^(-1) - 2^x,
                      10^(-9), 
                      100))
 
-                     
 end
