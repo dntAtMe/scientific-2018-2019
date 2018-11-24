@@ -74,7 +74,22 @@ function mstycznych(f::Function, pf::Function,
                                  delta::Float64,
                                  epsilon::Float64,
                                  maxit::Int)
-f(x0)
+    v = f(x0)
+    if abs(v) < epsilon
+        return (x0, v, 0, 0)
+    end
+    for k in range(1, stop=maxit)
+        if pf(x0) == 0
+            return (0, 0, 0, 2)
+        end
+        x1 = x0 - v/pf(x0)
+        v = f(x1)
+        if abs(x1 - x0) < delta || abs(v) < epsilon
+            return (x1, v, k, 0)
+        end
+        x0 = x1;
+    end
+    return (x0, v, maxit, 1)
 end
 
 ##
@@ -99,8 +114,24 @@ function msiecznych(f::Function, x0::Float64,
                                  x1::Float64,
                                  delta::Float64,
                                  epsilon::Float64,
-                                 maxit::Float64)
-f(x0)
+                                 maxit::Int)
+    fa = f(x0)
+    fb = f(x1)
+    for k in range(1, stop=maxit)
+        if abs(fa) > abs(fb)
+            x0, x1 = x1, x0
+            fa, fb = fb, fa
+        end
+        s = (x1 - x0) / (fb - fa)
+        x1 = x0
+        fb = fa
+        x0 = x0 - fa * s
+        fa = f(x0)
+        if abs(x1 - x0) < delta || abs(fa) < epsilon
+            return (x0, fa, k, 0)
+        end
+    end
+    (x0, fa, maxit, 1)    
 end
 
 
