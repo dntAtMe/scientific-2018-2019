@@ -48,5 +48,47 @@ println("Metoda bisekcji: ", Third.mbisekcji(x -> 3x - ℯ^x,
 ##
 #   6.
 ##
+println("\n6.")
+
+functions = [x-> ℯ^(1-x) - 1, x-> x*ℯ^(-x)]
+pfunctions = [x-> -ℯ^(1 - x) * log(ℯ), x-> -ℯ^(-x)*(x - 1)]
+δ = 10^(-5)
+ϵ = 10^(-5)
+println("ℯ^(1-x) - 1")
+println("Metoda bisekcji: ", Third.mbisekcji( functions[1],
+                                            0.0,
+                                            3.0,
+                                            δ, ϵ,
+                                            50))
+
+println("Metoda Newtona: ", Third.mstycznych( functions[1],
+                                            pfunctions[1],
+                                            0.0,
+                                            δ, ϵ,
+                                            50))
+
+println("Metoda siecznych: ", Third.mbisekcji( functions[1],
+                                            1.0,
+                                            2.0,
+                                            δ, ϵ,
+                                            50))
+println("xℯ^(-x)")
+println("Metoda bisekcji: ", Third.mbisekcji( functions[2],
+                                            0.0,
+                                            3.0,
+                                            δ, ϵ,
+                                            50))
+
+println("Metoda Newtona: ", Third.mstycznych( functions[2],
+                                            pfunctions[2],
+                                            200.0,
+                                            δ, ϵ,
+                                            50))
+
+println("Metoda siecznych: ", Third.mbisekcji( functions[2],
+                                            -1.0,
+                                            2.0,
+                                            δ, ϵ,
+                                            50))
 
 end

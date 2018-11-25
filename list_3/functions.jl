@@ -11,7 +11,7 @@ export mbisekcji, mstycznych, msiecznych
 # Parametry:
 # f - funkcja której pierwiastek ma być znaleziony
 # a, b - końce przedziału początkowego
-# delta, epsilon - dokładności obliczeń
+# δ, ϵ - dokładności obliczeń
 #
 # Wyjście:
 # (r, v ,it, err)
@@ -23,8 +23,8 @@ export mbisekcji, mstycznych, msiecznych
 ##
 function mbisekcji(f::Function, a::Float64,
                       b::Float64,
-                      delta::Float64,
-                      epsilon::Float64,
+                      δ::Float64,
+                      ϵ::Float64,
                       maxit::Int)
     u = f(a)
     v = f(b)
@@ -36,7 +36,7 @@ function mbisekcji(f::Function, a::Float64,
         e = e / 2
         c = a + e
         w = f(c)
-        if abs(e) < delta || abs(w) < epsilon
+        if abs(e) < δ || abs(w) < ϵ
             return (c, w, k, 0)
         end
         if sign(w) != sign(u)
@@ -56,7 +56,7 @@ end
 # Parametry:
 # f - funkcja, której pierwiastek ma być znaleziony
 # pf- pochodna funkcji f
-# delta, epsilon - dokładności obliczeń
+# δ, ϵ - dokładności obliczeń
 # maxit - maksymana dopuszczalna ilość iteracji
 #
 # Wyjście:
@@ -71,11 +71,11 @@ end
 ##
 function mstycznych(f::Function, pf::Function,
                                  x0::Float64,
-                                 delta::Float64,
-                                 epsilon::Float64,
+                                 δ::Float64,
+                                 ϵ::Float64,
                                  maxit::Int)
     v = f(x0)
-    if abs(v) < epsilon
+    if abs(v) < ϵ
         return (x0, v, 0, 0)
     end
     for k in range(1, stop=maxit)
@@ -84,7 +84,7 @@ function mstycznych(f::Function, pf::Function,
         end
         x1 = x0 - v/pf(x0)
         v = f(x1)
-        if abs(x1 - x0) < delta || abs(v) < epsilon
+        if abs(x1 - x0) < δ || abs(v) < ϵ
             return (x1, v, k, 0)
         end
         x0 = x1;
@@ -98,7 +98,7 @@ end
 # Parametry:
 # f - funkcja, której pierwiastek ma być znaleziony
 # x0, x1 - początkowe przybliżenia
-# delta, epsilon - dokładności obliczeń
+# δ, ϵ - dokładności obliczeń
 # maxit - maksymalna dopuszczalna ilość iteracji
 #
 # Wyjście:
@@ -112,8 +112,8 @@ end
 ##
 function msiecznych(f::Function, x0::Float64,
                                  x1::Float64,
-                                 delta::Float64,
-                                 epsilon::Float64,
+                                 δ::Float64,
+                                 ϵ::Float64,
                                  maxit::Int)
     fa = f(x0)
     fb = f(x1)
@@ -127,7 +127,7 @@ function msiecznych(f::Function, x0::Float64,
         fb = fa
         x0 = x0 - fa * s
         fa = f(x0)
-        if abs(x1 - x0) < delta || abs(fa) < epsilon
+        if abs(x1 - x0) < δ || abs(fa) < ϵ
             return (x0, fa, k, 0)
         end
     end
