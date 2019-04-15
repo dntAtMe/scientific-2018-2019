@@ -18,12 +18,12 @@ function dividedDifferences(x::Vector{Float64}, f::Vector{Float64})
     len = length(fx)
     
     for k in 1:len-1
-        println("k: ", k)
+       # println("k: ", k)
         for i in len:-1:2+(k-1)
-            println("i: ", i)
+          # println("i: ", i)
             fx[i] = (fx[i] - fx[i-1]) / (x[i] - (x[i-k]) )
         end
-        println("fx: ", fx)
+       # println("fx: ", fx)
     end
 
     return fx

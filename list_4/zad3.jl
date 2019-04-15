@@ -24,4 +24,3 @@ function natural(x::Vector{Float64}, fx::Vector{Float64})
     return result    
 end
 
-println(natural([1.0,2.0], [1.0, 2.0]))
